@@ -44,11 +44,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AddingReference.txt" />
-    <Content Include="RemoteDeployDebug.txt" />
-    <Content Include="UsingI2C.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
