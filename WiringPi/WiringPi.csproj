@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddingReference.txt" />
+    <Content Include="RemoteDeployDebug.txt" />
     <Content Include="UsingI2C.txt" />
   </ItemGroup>
   <ItemGroup>
