@@ -11,9 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPwm", "TestPwm\TestPwm.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88B7A42D-6EDE-44D9-AE49-A49F61CD9A51}"
 	ProjectSection(SolutionItems) = preProject
-		WiringPi\AddingReference.txt = WiringPi\AddingReference.txt
-		WiringPi\RemoteDeployDebug.txt = WiringPi\RemoteDeployDebug.txt
-		WiringPi\UsingI2C.txt = WiringPi\UsingI2C.txt
+		AddingReference.txt = AddingReference.txt
+		README.md = README.md
+		RemoteDeployDebug.txt = RemoteDeployDebug.txt
+		UsingI2C.txt = UsingI2C.txt
 	EndProjectSection
 EndProject
 Global
