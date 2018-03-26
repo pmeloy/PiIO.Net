@@ -44,6 +44,11 @@ using System.Text;
 
 namespace WiringPi
 {
+	[Serializable]
+	public class Measurements
+	{
+		public enum Units : int { Metric, Imperial }
+	}
     /// <summary>
     /// Used to initialise Gordon's library, there's 4 different ways to initialise and we're going to support all 4
     /// </summary>

@@ -16,14 +16,14 @@ Prerequisites
 
 Installing
 ----------
-Download the pmeloy/WiringPi.Net repository to your development PC (NOT the Pi!) then choose either
+Download the pmeloy/WiringPi.Net repository to your development PC or Pi then choose either
 adding the WiringPi.Net project to your solution or just use the wiringPi.Net.dll. For detailed
 instructions on adding a reference see "AddingReference.txt".
 
 I was unable to find wiringpi.o in the default Raspbian distro so I removed wiringpi with apt and
 downloaded/built from the wiringPi site.
 
-Download the original wiringPi to your Pi (NOT the PC) and follow the instructions to build it.
+Download the original wiringPi to your Pi (not PC) and follow the instructions to build it.
 
 You'll have to create a shared library from the wiringPi.o (in /wiringPi/wiringPi) with
 	
@@ -33,13 +33,14 @@ NOTE: The original WiringPi.Net Readme shows three files that had to be copied b
 
 At this point you should have:
 * wiringPi built on your Pi and the shared library created.
-* pmeloy/WiringPi.Net downloaded to your PC
+* pmeloy/WiringPi.Net downloaded to your PC or Pi
 * A reference to WiringPi.Net added to your project and set Copy Local to True
 * Optionally WiringPi.Net source added to your solution
 
 Remote Deploy and Debug
 -----------------------
-See RemoteDeployDebug.txt for tips on how to streamline development.
+See RemoteDeployDebug.txt for tips on how to streamline development. I prefer keeping all projects on
+the Pi so I can avoid manually copying and debug remotely.
 
 License
 -------

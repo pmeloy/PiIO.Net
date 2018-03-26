@@ -2,7 +2,7 @@ Adding a reference to WiringPi.Net
 
 To add the project to your solution:
 * In the Solution Explorer right-click on the Solution line and select "Add". In the contect menu choose "Existing Project"
-* Navigate to your local copy of pmeloy/WiringPi.Net and select the WiringPi.csproj file then click "Ok".
+* Navigate to your copy of pmeloy/WiringPi.Net and select the WiringPi.csproj file then click "Ok".
 * In the Solution Explorer, right click on your project (not solution) and choose Add Reference.
 * On the left side of the requester that appears, click on "Solution" and WiringPi.Net should
 	appear with a checkbox. Click the checkbox then click "ok"
