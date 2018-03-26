@@ -225,32 +225,128 @@ namespace WiringPi
     /// </summary>
     public class I2C
     {
+		public enum EndianType { Big, Little }
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CSetup")]
-        public static extern int wiringPiI2CSetup(int devId);
+        private static extern int wiringPiI2CSetup(int devId);
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CRead")]
-        public static extern int wiringPiI2CRead(int fd);
+        private static extern int wiringPiI2CRead(int fd);
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CWrite")]
-        public static extern int wiringPiI2CWrite(int fd, int data);
+        private static extern int wiringPiI2CWrite(int fd, int data);
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CWriteReg8")]
-        public static extern int wiringPiI2CWriteReg8(int fd, int reg, int data);
+        private static extern int wiringPiI2CWriteReg8(int fd, int reg, int data);
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CWriteReg16")]
-        public static extern int wiringPiI2CWriteReg16(int fd, int reg, int data);
+        private static extern int wiringPiI2CWriteReg16(int fd, int reg, int data);
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CReadReg8")]
-        public static extern int wiringPiI2CReadReg8(int fd, int reg);
+        private static extern int wiringPiI2CReadReg8(int fd, int reg);
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CReadReg16")]
-        public static extern int wiringPiI2CReadReg16(int fd, int reg);
-    }
-    
-    /// <summary>
-    ///  Provides the ability to use the Software Tone functions in WiringPi
-    /// </summary>
-    public class Tone
+        private static extern int wiringPiI2CReadReg16(int fd, int reg);
+
+		/// <summary>
+		/// Register I2C Device
+		/// </summary>
+		/// <param name="I2CAddress">I2C Address of the device</param>
+		/// <returns>Device Handle</returns>
+		public static int Setup(int I2CAddress)
+		{
+			return wiringPiI2CSetup(I2CAddress);
+		}
+
+		/// <summary>
+		/// Read one byte from I2C device
+		/// </summary>
+		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <returns>int</returns>
+		public static int ReadByte(int deviceHandle)
+		{
+			return wiringPiI2CRead(deviceHandle);
+		}
+
+		/// <summary>
+		/// Read one byte from address on I2C device
+		/// </summary>
+		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="address">Address to read from</param>
+		/// <returns></returns>
+		public static int ReadReg8(int deviceHandle,int address)
+		{
+			return wiringPiI2CReadReg8(deviceHandle, address);
+		}
+
+		/// <summary>
+		///	Read unsigned 16 bit integer from I2C device
+		/// </summary>
+		/// <param name="fd">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="address">Address of starting register</param>
+		/// <param name="endian">Big or little endian</param>
+		/// <returns>Unsigned Int</returns>
+		public static int ReadU16(int deviceHandle, int address, EndianType endian = EndianType.Big)
+		{
+			int result = 0;
+			int byte1, byte2;
+
+			byte1 = wiringPiI2CReadReg8(deviceHandle, address);
+			byte2 = wiringPiI2CReadReg8(deviceHandle, address + 1);
+
+			if (endian == EndianType.Big)
+			{
+				result = byte1 * 256 + byte2;
+			}
+			else
+			{
+				result = byte2 * 256 + byte1;
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// Read signed 16 bit integer from I2C device
+		/// </summary>
+		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="address">Address of starting register</param>
+		/// <param name="endian">Big or little endian</param>
+		/// <returns>Signed int</returns>
+		public static int ReadS16(int deviceHandle, int address, EndianType endian = EndianType.Big)
+		{
+			int result = 0;
+			result = ReadU16(deviceHandle, address, endian);
+			if (result > 32767) result -= 65536;
+			return result;
+		}
+
+		/// <summary>
+		/// Write byte to device
+		/// </summary>
+		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="value">Value to write</param>
+		public static void WriteByte(int deviceHandle, int value)
+		{
+			value &= 0xff;
+			I2C.wiringPiI2CWrite(deviceHandle, value);
+		}
+
+		/// <summary>
+		/// Write byte to register on device
+		/// </summary>
+		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="address">Address of starting register</param>
+		/// <param name="value">Value to write</param>
+		public static void WriteReg8(int deviceHandle, int address, int value)
+		{
+			value &= 0xff;
+			I2C.wiringPiI2CWriteReg8(deviceHandle, address, value);
+		}
+	}
+
+	/// <summary>
+	///  Provides the ability to use the Software Tone functions in WiringPi
+	/// </summary>
+	public class Tone
     {
         [DllImport("libwiringPi.so", EntryPoint = "softToneCreate")]
         public static extern int softToneCreate(int pin);

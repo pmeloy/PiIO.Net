@@ -1,5 +1,22 @@
-WiringPi.Net
-============
+pmeloy/WiringPi.Net
+===================
+A different take on WiringPi.Net with emphasis on functionality and ease of use.
+
+I've departed from the original WiringPi naming so methods like wiringPi.I2C.wiringPiReadReg8()
+are now called wiringPi.I2C.ReadReg8. Didn't see the point in doubling up on the name wiringPi.
+
+The danriches/WiringPi.Net I2C functions were simply exports from WiringPi even though the 16 bit
+methods were actually specific to device examples, lacking sign and endian options, and often
+simply couldn't deal with data correctly. I've added wrappers for the wrappers!
+
+- Getting Started
+Download the repository then choose either adding the WiringPi.Net project to your solution or just
+use the wiringPi.Net.dll. For detailed instructions on adding a reference see "AddingReference.txt
+
+
+
+
+
 
 A simple C# wrapper for Gordon's WiringPi library, also on GitHub. Please note this was only tested with
 the hardfloat version of Raspbian using CrashOverrides mono build which can be found here: 
