@@ -1,1 +1,1 @@
-﻿I2C is fairly simple. 
+﻿I2C is fairly simple.

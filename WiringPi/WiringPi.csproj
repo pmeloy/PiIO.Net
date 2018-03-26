@@ -44,9 +44,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AddingReference" />
-    <None Include="RemoteDeployDebug" />
-    <None Include="UsingI2C" />
+    <Content Include="AddingReference.txt" />
+    <Content Include="RemoteDeployDebug.txt" />
+    <Content Include="UsingI2C.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
