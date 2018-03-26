@@ -2,21 +2,64 @@ pmeloy/WiringPi.Net
 ===================
 A different take on WiringPi.Net with emphasis on functionality and ease of use.
 
-I've departed from the original WiringPi naming so methods like wiringPi.I2C.wiringPiReadReg8()
-are now called wiringPi.I2C.ReadReg8. Didn't see the point in doubling up on the name wiringPi.
+I've departed from the original WiringPi naming so a method like wiringPi.I2C.wiringPiReadReg8()
+is now called wiringPi.I2C.ReadReg8(). Didn't see the point in doubling up on the name wiringPi.
 
 The danriches/WiringPi.Net I2C functions were simply exports from WiringPi even though the 16 bit
-methods were actually specific to device examples, lacking sign and endian options, and often
+methods were actually specific to device examples and lacking sign and endian options, and often
 simply couldn't deal with data correctly. I've added wrappers for the wrappers!
 
-- Getting Started
-Download the repository then choose either adding the WiringPi.Net project to your solution or just
-use the wiringPi.Net.dll. For detailed instructions on adding a reference see "AddingReference.txt
+Prerequisites
+-------------
+- A .NET Ide like Visual Studio or MonoDevelop.
+- The original WiringPi installed on your Pi (http://wiringpi.com/)
 
+Installing
+----------
+Download the pmeloy/WiringPi.Net repository to your development PC (NOT the Pi!) then choose either
+adding the WiringPi.Net project to your solution or just use the wiringPi.Net.dll. For detailed
+instructions on adding a reference see "AddingReference.txt".
 
+I was unable to find wiringpi.o in the default Raspbian distro so I removed wiringpi with apt and
+downloaded/built from the wiringPi site.
 
+Download the original wiringPi to your Pi (NOT the PC) and follow the instructions to build it.
 
+You'll have to create a shared library from the wiringPi.o (in /wiringPi/wiringPi) with
+	
+	cc -shared wiringPi.o -o libwiringPi.so
 
+NOTE: The original WiringPi.Net Readme shows three files that had to be copied but now it's only the one.
+
+At this point you should have:
+* wiringPi built on your Pi and the shared library created.
+* pmeloy/WiringPi.Net downloaded to your PC
+* A reference to WiringPi.Net added to your project and set Copy Local to True
+* Optionally WiringPi.Net source added to your solution
+
+Remote Deploy and Debug
+-----------------------
+See RemoteDeployDebug.txt for tips on how to streamline development.
+
+License
+-------
+GNU GPL in keeping with danriches original license.
+
+Authors
+-------
+Just me (well, the parts that I changed).
+
+Acknowledgements
+----------------
+* The original wiringPi author since this wouldn't exist if that didn't!
+* danriches for the code to build upon
+* Adafruit and wiringPi for the example code (in the wrong languages) that let me figure out how to use WiringPi.NET
+	in the first place.
+
+EOF----------------------------------------------------------------------------------------------------------------
+
+Original danriches ReadMe contents.
+-----------------------------------
 
 A simple C# wrapper for Gordon's WiringPi library, also on GitHub. Please note this was only tested with
 the hardfloat version of Raspbian using CrashOverrides mono build which can be found here: 
