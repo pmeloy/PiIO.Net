@@ -329,23 +329,36 @@ namespace WiringPi
 		/// </summary>
 		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
 		/// <param name="value">Value to write</param>
-		public static void WriteByte(int deviceHandle, int value)
+		public static void WriteByte(int deviceHandle, int data)
 		{
-			value &= 0xff;
-			I2C.wiringPiI2CWrite(deviceHandle, value);
+			data &= 0xff;
+			I2C.wiringPiI2CWrite(deviceHandle, data);
 		}
 
 		/// <summary>
 		/// Write byte to register on device
 		/// </summary>
 		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="address">Address of register</param>
+		/// <param name="value">Value to write</param>
+		public static void WriteReg8(int deviceHandle, int address, int data)
+		{
+			data &= 0xff;
+			I2C.wiringPiI2CWriteReg8(deviceHandle, address, data);
+		}
+
+		/// <summary>
+		/// Write two bytes to register on device
+		/// </summary>
+		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
 		/// <param name="address">Address of starting register</param>
 		/// <param name="value">Value to write</param>
-		public static void WriteReg8(int deviceHandle, int address, int value)
+		public static void WriteReg16(int deviceHandle, int address, int data)
 		{
-			value &= 0xff;
-			I2C.wiringPiI2CWriteReg8(deviceHandle, address, value);
+			data &= 0xffff;
+			I2C.wiringPiI2CWriteReg16(deviceHandle, address, data);
 		}
+
 	}
 
 	/// <summary>

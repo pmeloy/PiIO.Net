@@ -45,7 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WiringPi\WiringPi.csproj">
+    <ProjectReference Include="E:\VS2015 Projects\pmeloy\WiringPi.Net\WiringPi\WiringPi.csproj">
       <Project>{44164c3f-b228-4488-b027-ea9717e7e6e1}</Project>
       <Name>WiringPi</Name>
     </ProjectReference>
