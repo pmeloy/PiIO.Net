@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WiringPi;
+using PiIO;
 
 namespace SPITest
 {
@@ -11,17 +11,17 @@ namespace SPITest
     //Main entry point
     public static int RunTest()
     {
-        //Init WiringPi library
-        int result = Init.WiringPiSetup();
+        //Init PiIO library
+        int result = Init.Setup();
 
         if (result == -1)
         {
-            Console.WriteLine("WiringPi init failed!");
+            Console.WriteLine("PiIO init failed!");
             return result;
         }
 
-        //Init WiringPi SPI library
-        result = SPI.wiringPiSPISetup(0, 32000000);
+        //Init PiIO SPI library
+        result = SPI.PiIOSPISetup(0, 32000000);
         if (result == -1)
         {
             Console.WriteLine("SPI init failed!");
@@ -42,7 +42,7 @@ namespace SPITest
             fixed (byte* p = buffer)
             {
                 // Do all pointer work, ie external calls within the fixed area. The gc or clr wont try to move the object in memory while we use it.
-                SPI.wiringPiSPIDataRW(0, p, 2);
+                SPI.PiIOSPIDataRW(0, p, 2);
             }
         }
 

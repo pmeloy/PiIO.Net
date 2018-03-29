@@ -17,12 +17,12 @@
  ************************************************************************************************
  * Changelog
  * Date         Changed By          Details of change  
- * 23 Nov 2013  Gerhard de Clercq   Changed digitalread to return int and implemented wiringPiISR
+ * 23 Nov 2013  Gerhard de Clercq   Changed digitalread to return int and implemented PiIOISR
  * 
  ************************************************************************************************
  * Changelog
  * Date         Changed By          Details of change  
- * 18 Jan 2016  Marcus Lum          Updated imported methods to current wiringPi 
+ * 18 Jan 2016  Marcus Lum          Updated imported methods to current PiIO 
  * 
  ************************************************************************************************
  * Changelog
@@ -54,16 +54,16 @@ namespace PiIO
     /// </summary>
     public class Init
     {
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiSetup")]     //This is an example of how to call a method / function in a c library from c#
+        [DllImport("libPiIO.so", EntryPoint = "Setup")]     //This is an example of how to call a method / function in a c library from c#
         public static extern int Setup();
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiSetupGpio")]
+        [DllImport("libPiIO.so", EntryPoint = "SetupGpio")]
         public static extern int SetupGpio();
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiSetupSys")]
+        [DllImport("libPiIO.so", EntryPoint = "SetupSys")]
         public static extern int SetupSys();
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiSetupPhys")]
+        [DllImport("libPiIO.so", EntryPoint = "SetupPhys")]
         public static extern int SetupPhys();
     }
 	/// <summary>
@@ -71,35 +71,35 @@ namespace PiIO
     /// </summary>
     public class GPIO
     {
-        [DllImport("libwiringPi.so", EntryPoint = "pinMode")]           //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "pinMode")]           //Uses Gpio pin numbers
         public static extern void pinMode(int pin, int mode);
 
-        [DllImport("libwiringPi.so", EntryPoint = "digitalWrite")]      //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "digitalWrite")]      //Uses Gpio pin numbers
         public static extern void digitalWrite(int pin, int value);
 
-        [DllImport("libwiringPi.so", EntryPoint = "digitalWriteByte")]      //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "digitalWriteByte")]      //Uses Gpio pin numbers
         public static extern void digitalWriteByte(int value);
 
-        [DllImport("libwiringPi.so", EntryPoint = "digitalRead")]           //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "digitalRead")]           //Uses Gpio pin numbers
         public static extern int digitalRead(int pin);
 
-        [DllImport("libwiringPi.so", EntryPoint = "pullUpDnControl")]         //Uses Gpio pin numbers  
+        [DllImport("libPiIO.so", EntryPoint = "pullUpDnControl")]         //Uses Gpio pin numbers  
         public static extern void pullUpDnControl(int pin, int pud);
 
         //This pwm mode cannot be used when using GpioSys mode!!
-        [DllImport("libwiringPi.so", EntryPoint = "pwmWrite")]              //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "pwmWrite")]              //Uses Gpio pin numbers
         public static extern void pwmWrite(int pin, int value);
 
-        [DllImport("libwiringPi.so", EntryPoint = "pwmSetMode")]             //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "pwmSetMode")]             //Uses Gpio pin numbers
         public static extern void pwmSetMode(int mode);
 
-        [DllImport("libwiringPi.so", EntryPoint = "pwmSetRange")]             //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "pwmSetRange")]             //Uses Gpio pin numbers
         public static extern void pwmSetRange(uint range);
 
-        [DllImport("libwiringPi.so", EntryPoint = "pwmSetClock")]             //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "pwmSetClock")]             //Uses Gpio pin numbers
         public static extern void pwmSetClock(int divisor);
 
-        [DllImport("libwiringPi.so", EntryPoint = "gpioClockSet")]              //Uses Gpio pin numbers
+        [DllImport("libPiIO.so", EntryPoint = "gpioClockSet")]              //Uses Gpio pin numbers
         public static extern void ClockSetGpio(int pin, int freq);
 
         public enum GPIOpinmode
@@ -127,13 +127,13 @@ namespace PiIO
         }
     }
 	public class SoftPwm {
-        [DllImport("libwiringPi.so", EntryPoint = "softPwmCreate")]
+        [DllImport("libPiIO.so", EntryPoint = "softPwmCreate")]
         public static extern int Create(int pin, int initialValue, int pwmRange);
 
-        [DllImport("libwiringPi.so", EntryPoint = "softPwmWrite")]
+        [DllImport("libPiIO.so", EntryPoint = "softPwmWrite")]
         public static extern void Write(int pin, int value);
 
-        [DllImport("libwiringPi.so", EntryPoint = "softPwmStop")]
+        [DllImport("libPiIO.so", EntryPoint = "softPwmStop")]
         public static extern void Stop(int pin);
     }
 	/// <summary>
@@ -141,16 +141,16 @@ namespace PiIO
     /// </summary>
     public class Timing
     {
-        [DllImport("libwiringPi.so", EntryPoint = "millis")]
+        [DllImport("libPiIO.so", EntryPoint = "millis")]
         public static extern uint millis();
 
-        [DllImport("libwiringPi.so", EntryPoint = "micros")]
+        [DllImport("libPiIO.so", EntryPoint = "micros")]
         public static extern uint micros();
 
-        [DllImport("libwiringPi.so", EntryPoint = "delay")]
+        [DllImport("libPiIO.so", EntryPoint = "delay")]
         public static extern void delay(uint howLong);
 
-        [DllImport("libwiringPi.so", EntryPoint = "delayMicroseconds")]
+        [DllImport("libPiIO.so", EntryPoint = "delayMicroseconds")]
         public static extern void delayMicroseconds(uint howLong);
     }
     /// <summary>
@@ -158,17 +158,17 @@ namespace PiIO
     /// </summary>
     public class PiThreadInterrupts
     {
-        [DllImport("libwiringPi.so", EntryPoint = "piHiPri")]
+        [DllImport("libPiIO.so", EntryPoint = "piHiPri")]
         public static extern int piHiPri(int priority);
 
-        [DllImport("libwiringPi.so", EntryPoint = "waitForInterrupt")]
+        [DllImport("libPiIO.so", EntryPoint = "waitForInterrupt")]
         public static extern int waitForInterrupt(int pin, int timeout);
 
-        //This is the C# equivelant to "void (*function)(void))" required by wiringPi to define a callback method
+        //This is the C# equivelant to "void (*function)(void))" required by PiIO to define a callback method
         public delegate void ISRCallback();
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiISR")]
-        public static extern int wiringPiISR(int pin, int mode, ISRCallback method);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOISR")]
+        public static extern int PiIOISR(int pin, int mode, ISRCallback method);
 
         public enum InterruptLevels
         {
@@ -182,16 +182,16 @@ namespace PiIO
     }
     public class MiscFunctions
     {
-        [DllImport("libwiringPi.so", EntryPoint = "piBoardRev")]
+        [DllImport("libPiIO.so", EntryPoint = "piBoardRev")]
         public static extern int piBoardRev();
 
-        [DllImport("libwiringPi.so", EntryPoint = "wpiPinToGpio")]
+        [DllImport("libPiIO.so", EntryPoint = "wpiPinToGpio")]
         public static extern int wpiPinToGpio(int wPiPin);
 
-        [DllImport("libwiringPi.so", EntryPoint = "physPinToGpio")]
+        [DllImport("libPiIO.so", EntryPoint = "physPinToGpio")]
         public static extern int physPinToGpio(int physPin);
 
-        [DllImport("libwiringPi.so", EntryPoint = "setPadDrive")]
+        [DllImport("libPiIO.so", EntryPoint = "setPadDrive")]
         public static extern int setPadDrive(int group, int value);
     }
     /// <summary>
@@ -205,8 +205,8 @@ namespace PiIO
         /// <param name="channel">Selects either Channel 0 or 1 for use</param>
         /// <param name="speed">Selects speed, 500,000 to 32,000,000</param>
         /// <returns>-1 for an error, or the linux file descriptor the channel uses</returns>
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiSPISetup")]
-        public static extern int wiringPiSPISetup(int channel, int speed);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOSPISetup")]
+        public static extern int PiIOSPISetup(int channel, int speed);
 
         /// <summary>
         /// Read and Write data over the SPI bus, don't forget to configure it first
@@ -215,8 +215,8 @@ namespace PiIO
         /// <param name="data">signed byte array pointer which holds the data to send and will then hold the received data</param>
         /// <param name="len">How many bytes to write and read</param>
         /// <returns>-1 for an error, or the linux file descriptor the channel uses</returns>
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiSPIDataRW")]
-        public static unsafe extern int wiringPiSPIDataRW(int channel, byte* data, int len);  //char is a signed byte
+        [DllImport("libPiIO.so", EntryPoint = "PiIOSPIDataRW")]
+        public static unsafe extern int PiIOSPIDataRW(int channel, byte* data, int len);  //char is a signed byte
     }
     /// <summary>
     /// Provides access to the I2C port
@@ -224,26 +224,26 @@ namespace PiIO
     public class I2CCmd
     {
 		public enum EndianType { Big, Little }
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CSetup")]
-        private static extern int wiringPiI2CSetup(int devId);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOI2CSetup")]
+        private static extern int PiIOI2CSetup(int devId);
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CRead")]
-        private static extern int wiringPiI2CRead(int fd);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOI2CRead")]
+        private static extern int PiIOI2CRead(int fd);
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CWrite")]
-        private static extern int wiringPiI2CWrite(int fd, int data);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOI2CWrite")]
+        private static extern int PiIOI2CWrite(int fd, int data);
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CWriteReg8")]
-        private static extern int wiringPiI2CWriteReg8(int fd, int reg, int data);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOI2CWriteReg8")]
+        private static extern int PiIOI2CWriteReg8(int fd, int reg, int data);
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CWriteReg16")]
-        private static extern int wiringPiI2CWriteReg16(int fd, int reg, int data);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOI2CWriteReg16")]
+        private static extern int PiIOI2CWriteReg16(int fd, int reg, int data);
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CReadReg8")]
-        private static extern int wiringPiI2CReadReg8(int fd, int reg);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOI2CReadReg8")]
+        private static extern int PiIOI2CReadReg8(int fd, int reg);
 
-        [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CReadReg16")]
-        private static extern int wiringPiI2CReadReg16(int fd, int reg);
+        [DllImport("libPiIO.so", EntryPoint = "PiIOI2CReadReg16")]
+        private static extern int PiIOI2CReadReg16(int fd, int reg);
 
 		/// <summary>
 		/// Register I2C Device
@@ -252,34 +252,34 @@ namespace PiIO
 		/// <returns>Device Handle</returns>
 		public static int Setup(int I2CAddress)
 		{
-			return wiringPiI2CSetup(I2CAddress);
+			return PiIOI2CSetup(I2CAddress);
 		}
 
 		/// <summary>
 		/// Read one byte from I2C device
 		/// </summary>
-		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="deviceHandle">Device handle from PiIOI2CSetup()</param>
 		/// <returns>int</returns>
 		public static int ReadByte(int deviceHandle)
 		{
-			return wiringPiI2CRead(deviceHandle);
+			return PiIOI2CRead(deviceHandle);
 		}
 
 		/// <summary>
 		/// Read one byte from address on I2C device
 		/// </summary>
-		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="deviceHandle">Device handle from PiIOI2CSetup()</param>
 		/// <param name="address">Address to read from</param>
 		/// <returns></returns>
 		public static int ReadReg8(int deviceHandle,int address)
 		{
-			return wiringPiI2CReadReg8(deviceHandle, address);
+			return PiIOI2CReadReg8(deviceHandle, address);
 		}
 
 		/// <summary>
 		///	Read unsigned 16 bit integer from I2C device
 		/// </summary>
-		/// <param name="fd">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="fd">Device handle from PiIOI2CSetup()</param>
 		/// <param name="address">Address of starting register</param>
 		/// <param name="endian">Big or little endian</param>
 		/// <returns>Unsigned Int</returns>
@@ -288,8 +288,8 @@ namespace PiIO
 			int result = 0;
 			int byte1, byte2;
 
-			byte1 = wiringPiI2CReadReg8(deviceHandle, address);
-			byte2 = wiringPiI2CReadReg8(deviceHandle, address + 1);
+			byte1 = PiIOI2CReadReg8(deviceHandle, address);
+			byte2 = PiIOI2CReadReg8(deviceHandle, address + 1);
 
 			if (endian == EndianType.Big)
 			{
@@ -305,7 +305,7 @@ namespace PiIO
 		/// <summary>
 		/// Read signed 16 bit integer from I2C device
 		/// </summary>
-		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="deviceHandle">Device handle from PiIOI2CSetup()</param>
 		/// <param name="address">Address of starting register</param>
 		/// <param name="endian">Big or little endian</param>
 		/// <returns>Signed int</returns>
@@ -320,36 +320,36 @@ namespace PiIO
 		/// <summary>
 		/// Write byte to device
 		/// </summary>
-		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="deviceHandle">Device handle from PiIOI2CSetup()</param>
 		/// <param name="value">Value to write</param>
 		public static void WriteByte(int deviceHandle, int data)
 		{
 			data &= 0xff;
-			wiringPiI2CWrite(deviceHandle, data);
+			PiIOI2CWrite(deviceHandle, data);
 		}
 
 		/// <summary>
 		/// Write byte to register on device
 		/// </summary>
-		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="deviceHandle">Device handle from PiIOI2CSetup()</param>
 		/// <param name="address">Address of register</param>
 		/// <param name="value">Value to write</param>
 		public static void WriteReg8(int deviceHandle, int address, int data)
 		{
 			data &= 0xff;
-			wiringPiI2CWriteReg8(deviceHandle, address, data);
+			PiIOI2CWriteReg8(deviceHandle, address, data);
 		}
 
 		/// <summary>
 		/// Write two bytes to register on device
 		/// </summary>
-		/// <param name="deviceHandle">Device handle from wiringPiI2CSetup()</param>
+		/// <param name="deviceHandle">Device handle from PiIOI2CSetup()</param>
 		/// <param name="address">Address of starting register</param>
 		/// <param name="value">Value to write</param>
 		public static void WriteReg16(int deviceHandle, int address, int data)
 		{
 			data &= 0xffff;
-			wiringPiI2CWriteReg16(deviceHandle, address, data);
+			PiIOI2CWriteReg16(deviceHandle, address, data);
 		}
 
 	}
@@ -358,10 +358,10 @@ namespace PiIO
 	/// </summary>
 	public class Tone
     {
-        [DllImport("libwiringPi.so", EntryPoint = "softToneCreate")]
+        [DllImport("libPiIO.so", EntryPoint = "softToneCreate")]
         public static extern int softToneCreate(int pin);
 
-        [DllImport("libwiringPi.so", EntryPoint = "softToneWrite")]
+        [DllImport("libPiIO.so", EntryPoint = "softToneWrite")]
         public static extern void softToneWrite(int pin, int freq);
     }
 }

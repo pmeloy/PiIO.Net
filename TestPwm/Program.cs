@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using WiringPi;
+using PiIO;
 
 namespace TestPwm {
     class Program {
 
         static void Main(string[] args) {
-            //int ret = Init.WiringPiSetup();
-            int ret = Init.WiringPiSetupGpio();
+            //int ret = Init.Setup();
+            int ret = Init.SetupGpio();
             if(ret == -1) {
                 Console.WriteLine("Init failed: {0}", ret);
                 return;

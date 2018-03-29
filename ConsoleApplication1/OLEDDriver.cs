@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WiringPi;
+using PiIO;
 using System.Threading;
 
 namespace SPITest
@@ -219,17 +219,17 @@ namespace SPITest
 
         public static int RunTest()
         {
-            //Init WiringPi library
-            int result = Init.WiringPiSetup();
+            //Init PiIO library
+            int result = Init.Setup();
 
             if (result == -1)
             {
-                Console.WriteLine("WiringPi init failed!");
+                Console.WriteLine("PiIO init failed!");
                 return result;
             }
 
-            //Init WiringPi SPI library
-            result = SPI.wiringPiSPISetup(0, 20000000); ;
+            //Init PiIO SPI library
+            result = SPI.PiIOSPISetup(0, 20000000); ;
             if (result == -1)
             {
                 Console.WriteLine("SPI init failed!");
@@ -492,7 +492,7 @@ namespace SPITest
                 fixed (byte* p = buffer)
                 {
                     // Do all pointer work, ie external calls within the fixed area. The gc or clr wont try to move the object in memory while we use it.
-                    SPI.wiringPiSPIDataRW(0, p, 1); //0 is SPI channel, p is byte array, 1 is number of bytes
+                    SPI.PiIOSPIDataRW(0, p, 1); //0 is SPI channel, p is byte array, 1 is number of bytes
                 }
             }
         }
@@ -514,7 +514,7 @@ namespace SPITest
                 fixed (byte* p = buffer)
                 {
                     // Do all pointer work, ie external calls within the fixed area. The gc or clr wont try to move the object in memory while we use it.
-                    SPI.wiringPiSPIDataRW(0, p, 1); //0 is SPI channel, p is byte array, 1 is number of bytes
+                    SPI.PiIOSPIDataRW(0, p, 1); //0 is SPI channel, p is byte array, 1 is number of bytes
                 }
             }
 

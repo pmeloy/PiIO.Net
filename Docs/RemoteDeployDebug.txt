@@ -2,7 +2,7 @@
 ===============================
 
 You can build on the local machine and copy the files to the Pi but you cannot debug on the local machine
-because there is no WiringPi library available. I find it easier to create a Samba share and have the solution
+because there is no PiIO library available. I find it easier to create a Samba share and have the solution
 folder on the Pi. That way when I build the files are already on the Pi and I don't have to copy them manually.
 
 

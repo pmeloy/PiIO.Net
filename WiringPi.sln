@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Docs\UsingI2C.txt = Docs\UsingI2C.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiringPi", "E:\VS2015 Projects\pmeloy\WiringPi.Net\WiringPi\WiringPi.csproj", "{44164C3F-B228-4488-B027-EA9717E7E6E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiIO", "PiIO\PiIO.csproj", "{44164C3F-B228-4488-B027-EA9717E7E6E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
