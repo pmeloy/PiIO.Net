@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PiIO;
+using PiIO.SPI;
+using PiIO.GPIO;
 using System.Threading;
 
 namespace SPITest
@@ -215,77 +217,76 @@ namespace SPITest
 	        0x10, 0x08, 0x18, 0x10, 0x08  // ~
 
         };
-#endregion
+		#endregion
 
-        public static int RunTest()
-        {
-            //Init PiIO library
-            int result = Init.Setup();
+		public static int RunTest()
+		{
+			//Init PiIO library
+			int result = Init.Setup();
 
-            if (result == -1)
-            {
-                Console.WriteLine("PiIO init failed!");
-                return result;
-            }
+			if (result == -1)
+			{
+				Console.WriteLine("PiIO init failed!");
+				return result;
+			}
 
-            //Init PiIO SPI library
-            result = SPI.PiIOSPISetup(0, 20000000); ;
-            if (result == -1)
-            {
-                Console.WriteLine("SPI init failed!");
-                return result;
-            }
+			//Init PiIO SPI library
+			result = SPICmd.Setup(0, 20000000); ;
+			if (result == -1)
+			{
+				Console.WriteLine("SPI init failed!");
+				return result;
+			}
 
-            Console.WriteLine("SPI init completed, using channel 0 at 20MHz for OLED Display");
+			Console.WriteLine("SPI init completed, using channel 0 at 20MHz for OLED Display");
 
-            //Now initialise the OLED device and write a hello world message on it!
-            //GPIO4 is used for data/~command in 4 wire spi mode            
-            GPIO.pinMode(4, (int)GPIO.GPIOpinmode.Output);
-            GPIO.pinMode(17, (int)GPIO.GPIOpinmode.Output);
+			//Now initialise the OLED device and write a hello world message on it!
+			//GPIO4 is used for data/~command in 4 wire spi mode            
+			GPIOCmd.pinMode(4, (int)GPIOCmd.GPIOpinmode.Output);
+			GPIOCmd.pinMode(17, (int)GPIOCmd.GPIOpinmode.Output);
 
-            InitDisplay();
+			InitDisplay();
 
-            WriteCommand(SSD1306_INVERTDISPLAY);
+			WriteCommand(SSD1306_INVERTDISPLAY);
 
-            ShortDelay();
+			ShortDelay();
 
-            WriteCommand(SSD1306_NORMALDISPLAY);
+			WriteCommand(SSD1306_NORMALDISPLAY);
 
-            ClearScreen();
-            WriteScreen();
-           
-            ShortDelay();
-            ShortDelay();
+			ClearScreen();
+			WriteScreen();
 
-            SetScreen();
-            WriteScreen();
+			ShortDelay();
+			ShortDelay();
 
-            ShortDelay();
-            ShortDelay();
+			SetScreen();
+			WriteScreen();
 
-            ClearScreen();
-            WriteScreen();
+			ShortDelay();
+			ShortDelay();
 
-            while (true)
-            {
-                //Write Hello World on display
-                ShortDelay();
-                ShortDelay();
-                WriteText(" " + System.DateTime.Now.ToLongTimeString());
-                ShortDelay();
-                ShortDelay();
-                WriteScreen();
+			ClearScreen();
+			WriteScreen();
 
-                ShortDelay();
-                ShortDelay();
+			while (true)
+			{
+				//Write Hello World on display
+				ShortDelay();
+				ShortDelay();
+				WriteText(" " + System.DateTime.Now.ToLongTimeString());
+				ShortDelay();
+				ShortDelay();
+				WriteScreen();
 
-                ShortDelay();
-                ShortDelay();
+				ShortDelay();
+				ShortDelay();
 
-                InitDisplay();
-            }
-            return 0;
-        }
+				ShortDelay();
+				ShortDelay();
+
+				InitDisplay();
+			}
+		}
 
         private static void ShortDelay()
         {
@@ -393,7 +394,7 @@ namespace SPITest
         private static void WriteCommand(byte command)
         {
             //set D/C pin 7 low for command
-            GPIO.digitalWrite(4, 0);
+            GPIOCmd.digitalWrite(4, 0);
 
             WriteByte(command);
             ShortDelay();
@@ -402,7 +403,7 @@ namespace SPITest
         private static void WriteData(byte data)
         {
             //set D/C pin 7 high for data
-            GPIO.digitalWrite(4, 1);
+            GPIOCmd.digitalWrite(4, 1);
 
             WriteByte(data);
 
@@ -413,9 +414,9 @@ namespace SPITest
             bool result = false;
 
             //Reset first!!
-            GPIO.digitalWrite(17, 0);
+            GPIOCmd.digitalWrite(17, 0);
             ShortDelay();
-            GPIO.digitalWrite(17, 1);   //release reset
+            GPIOCmd.digitalWrite(17, 1);   //release reset
             ShortDelay();
 
             // Init sequence for 128x64 OLED module
@@ -492,7 +493,7 @@ namespace SPITest
                 fixed (byte* p = buffer)
                 {
                     // Do all pointer work, ie external calls within the fixed area. The gc or clr wont try to move the object in memory while we use it.
-                    SPI.PiIOSPIDataRW(0, p, 1); //0 is SPI channel, p is byte array, 1 is number of bytes
+                    SPICmd.DataRW(0, p, 1); //0 is SPI channel, p is byte array, 1 is number of bytes
                 }
             }
         }
@@ -514,7 +515,7 @@ namespace SPITest
                 fixed (byte* p = buffer)
                 {
                     // Do all pointer work, ie external calls within the fixed area. The gc or clr wont try to move the object in memory while we use it.
-                    SPI.PiIOSPIDataRW(0, p, 1); //0 is SPI channel, p is byte array, 1 is number of bytes
+                    SPICmd.DataRW(0, p, 1); //0 is SPI channel, p is byte array, 1 is number of bytes
                 }
             }
 

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using PiIO;
+using PiIO.PWM;
 
 namespace TestPwm {
     class Program {
@@ -27,12 +25,12 @@ namespace TestPwm {
                 return;
             }
             Console.WriteLine("range:{0}, value:{1}", range, value);
-            SoftPwm.Create(pin, value, range);
+            SoftPwmCmd.Create(pin, value, range);
             Console.WriteLine("Init succeeded");
 
-            SoftPwm.Write(pin, value);
+            SoftPwmCmd.Write(pin, value);
             Console.ReadKey(true);
-            SoftPwm.Stop(pin);
+            SoftPwmCmd.Stop(pin);
             Thread.Sleep(100);
         }
     }

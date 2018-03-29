@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PiIO;
+using PiIO.SPI;
 using System.Threading;
 
 namespace SPITest
@@ -27,7 +28,7 @@ namespace SPITest
             }
 
             //Init PiIO SPI library
-            result = SPI.PiIOSPISetup(1, 20000000); ;
+            result = SPICmd.Setup(1, 20000000); ;
             if (result == -1)
             {
                 Console.WriteLine("SPI init failed!");
@@ -130,7 +131,7 @@ namespace SPITest
                 fixed (byte* p = buffer)
                 {
                     // Do all pointer work, ie external calls within the fixed area. The gc or clr wont try to move the object in memory while we use it.
-                    SPI.PiIOSPIDataRW(1, p, 2); //1 is SPI channel, p is byte array, 2 is number of bytes
+                    SPICmd.DataRW(1, p, 2); //1 is SPI channel, p is byte array, 2 is number of bytes
                 }
             }
         }

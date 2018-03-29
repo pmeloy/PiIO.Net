@@ -8,8 +8,8 @@
     <ProjectGuid>{44164C3F-B228-4488-B027-EA9717E7E6E1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WiringPi</RootNamespace>
-    <AssemblyName>WiringPi</AssemblyName>
+    <RootNamespace>PiIO</RootNamespace>
+    <AssemblyName>PiOP</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -37,13 +37,19 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sensors\BMP180Class.cs" />
-    <Compile Include="PiIOClass.cs" />
+    <Compile Include="GPIO\GPIOClass.cs" />
+    <Compile Include="I2C\I2CClass.cs" />
+    <Compile Include="I2C\Devices\Sensors\BMP180Class.cs" />
+    <Compile Include="PWM\PiIOClass.cs" />
+    <Compile Include="PWMClass.cs" />
+    <Compile Include="SPI\SPIClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tone\ToneClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
