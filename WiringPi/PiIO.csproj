@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sensors\BMP180Class.cs" />
-    <Compile Include="WrapperClass.cs" />
+    <Compile Include="PiIOClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

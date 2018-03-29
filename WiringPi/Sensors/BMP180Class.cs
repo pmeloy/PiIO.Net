@@ -5,12 +5,14 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using WiringPi;
+using PiIO;
+using PiIO.I2C;
 
 
 
-namespace WiringPi.Sensors
+namespace PiIO.I2C.Devices.TempAndPress
 {
+
 	/// <summary>
 	/// I2C Air pressure and temperature sensors (080,180,280)
 	/// </summary>
@@ -79,7 +81,7 @@ namespace WiringPi.Sensors
 		{
 
 			_overSampleMode = cycles; //bmpMode; //Todo: Do something with this!
-			_bmpHandle = I2C.Setup(address);
+			_bmpHandle = I2CCmd.Setup(address);
 			LoadCalibration();
 		}
 
@@ -102,28 +104,17 @@ namespace WiringPi.Sensors
 		private void LoadCalibration()
 		{
 
-			_cal_AC1 = I2C.ReadS16(_bmpHandle, ADDR_AC1);
-			Debug.Print("AC1 = 0x{0:X} ({0})", _cal_AC1);
-			_cal_AC2 = I2C.ReadS16(_bmpHandle, ADDR_AC2);
-			Debug.Print("AC2 = 0x{0:X} ({0})", _cal_AC2);
-			_cal_AC3 = I2C.ReadS16(_bmpHandle, ADDR_AC3);
-			Debug.Print("AC3 = 0x{0:X} ({0})", _cal_AC3);
-			_cal_AC4 = I2C.ReadU16(_bmpHandle, ADDR_AC4);
-			Debug.Print("AC4 = 0x{0:X} ({0})", _cal_AC4);
-			_cal_AC5 = I2C.ReadU16(_bmpHandle, ADDR_AC5);
-			Debug.Print("AC5 = 0x{0:X} ({0})", _cal_AC5);
-			_cal_AC6 = I2C.ReadU16(_bmpHandle, ADDR_AC6);
-			Debug.Print("AC6 = 0x{0:X} ({0})", _cal_AC6);
-			_cal_B1 = I2C.ReadS16(_bmpHandle, ADDR_B1);
-			Debug.Print("B1 = 0x{0:X} ({0})", _cal_B1);
-			_cal_B2 = I2C.ReadS16(_bmpHandle, ADDR_B2);
-			Debug.Print("B2 = 0x{0:X} ({0})", _cal_B2);
-			_cal_MB = I2C.ReadS16(_bmpHandle, ADDR_MB);
-			Debug.Print("MB = 0x{0:X} ({0})", _cal_MB);
-			_cal_MC = I2C.ReadS16(_bmpHandle, ADDR_MC);
-			Debug.Print("MC = 0x{0:X} ({0})", _cal_MC);
-			_cal_MD = I2C.ReadS16(_bmpHandle, ADDR_MD);
-			Debug.Print("MD = 0x{0:X} ({0})", _cal_MD);
+			_cal_AC1 = I2CCmd.ReadS16(_bmpHandle, ADDR_AC1);
+			_cal_AC2 = I2CCmd.ReadS16(_bmpHandle, ADDR_AC2);
+			_cal_AC3 = I2CCmd.ReadS16(_bmpHandle, ADDR_AC3);
+			_cal_AC4 = I2CCmd.ReadU16(_bmpHandle, ADDR_AC4);
+			_cal_AC5 = I2CCmd.ReadU16(_bmpHandle, ADDR_AC5);
+			_cal_AC6 = I2CCmd.ReadU16(_bmpHandle, ADDR_AC6);
+			_cal_B1 = I2CCmd.ReadS16(_bmpHandle, ADDR_B1);
+			_cal_B2 = I2CCmd.ReadS16(_bmpHandle, ADDR_B2);
+			_cal_MB = I2CCmd.ReadS16(_bmpHandle, ADDR_MB);
+			_cal_MC = I2CCmd.ReadS16(_bmpHandle, ADDR_MC);
+			_cal_MD = I2CCmd.ReadS16(_bmpHandle, ADDR_MD);
 		}
 		#endregion
 
@@ -146,16 +137,16 @@ namespace WiringPi.Sensors
 		{
 
 			int raw;
-			I2C.WriteReg8(_bmpHandle, ADDR_CONTROL, CMD_READ_TEMP);
+			I2CCmd.WriteReg8(_bmpHandle, ADDR_CONTROL, CMD_READ_TEMP);
 			Thread.Sleep(50);
-			raw = I2C.ReadU16(_bmpHandle, ADDR_TEMP);
+			raw = I2CCmd.ReadU16(_bmpHandle, ADDR_TEMP);
 
 			return raw;
 		}
 		private int ReadRawPress()
 		{
 			int delay, msb, lsb, xlsb, raw;
-			I2C.WriteReg8(_bmpHandle, ADDR_CONTROL, CMD_READ_PRESS | ((int)_overSampleMode << 6));
+			I2CCmd.WriteReg8(_bmpHandle, ADDR_CONTROL, CMD_READ_PRESS | ((int)_overSampleMode << 6));
 			switch (_overSampleMode)
 			{
 				case (SampleCycles.One):
@@ -176,9 +167,9 @@ namespace WiringPi.Sensors
 			}
 
 			Thread.Sleep(delay);
-			msb = I2C.ReadReg8(_bmpHandle, ADDR_PRESS);
-			lsb = I2C.ReadReg8(_bmpHandle, ADDR_PRESS + 1);
-			xlsb = I2C.ReadReg8(_bmpHandle, ADDR_PRESS + 2);
+			msb = I2CCmd.ReadReg8(_bmpHandle, ADDR_PRESS);
+			lsb = I2CCmd.ReadReg8(_bmpHandle, ADDR_PRESS + 1);
+			xlsb = I2CCmd.ReadReg8(_bmpHandle, ADDR_PRESS + 2);
 			raw = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - (int)_overSampleMode);
 			return raw;
 		}
@@ -192,7 +183,6 @@ namespace WiringPi.Sensors
 			X1 = (UT - _cal_AC6) * _cal_AC5 >> 15;
 			X2 = (_cal_MC << 11) / (X1 + _cal_MD);
 			B5 = X1 + X2;
-			Debug.Print("Temp {0}", (B5 + 8) / 16);
 			tempC = ((B5 + 8) / 16) / 10d;
 			return tempC;
 		}
@@ -205,34 +195,20 @@ namespace WiringPi.Sensors
 			long UP = ReadRawPress();
 
 			X1 = (UT - _cal_AC6) * _cal_AC5 >> 15;
-			Debug.Print("X1 {0}", X1);
 			X2 = (_cal_MC << 11) / (X1 + _cal_MD);
-			Debug.Print("X2 {0}", X2);
 			B5 = X1 + X2;
-			Debug.Print("B5 {0}", B5);
-			Debug.Print("T {0}\n", (B5 + 8) / 16);
 
 			B6 = B5 - 4000;
-			Debug.Print("B6 {0}", B6);
 			X1 = (_cal_B2 * (B6 * B6) >> 12) >> 11;
-			Debug.Print("X1 {0}", X1);
 			X2 = (_cal_AC2 * B6) >> 11;
-			Debug.Print("X2 {0}", X2);
 			X3 = X1 + X2;
-			Debug.Print("X3 {0}", X3);
 			B3 = (((_cal_AC1 * 4 + X3) << (int)_overSampleMode) + 2) / 4;
-			Debug.Print("B3 {0}", B3);
 			X1 = _cal_AC3 * B6 >> 13;
-			Debug.Print("X1 {0}", X1);
 			X2 = (_cal_B1 * ((B6 * B6) >> 12)) >> 16;
-			Debug.Print("X2 {0}", X2);
 			X3 = ((X1 + X2) + 2) >> 2;
-			Debug.Print("X3 {0}", X3);
 
 			B4 = _cal_AC4 * (long)((ulong)(X3 + 32768)) >> 15;
-			Debug.Print("B4 {0}", B4);
 			B7 = ((long)(ulong)(UP - B3)) * (50000 >> (int)_overSampleMode);
-			Debug.Print("B7 {0}", B7);
 			if (B7 < 0x80000000)
 			{
 				p = (B7 * 2) / B4;
@@ -241,15 +217,10 @@ namespace WiringPi.Sensors
 			{
 				p = (B7 / B4) * 2;
 			}
-			Debug.Print("P {0}\n", p);
 			X1 = (p >> 8) * (p >> 8);
-			Debug.Print("X1 {0}", X1);
 			X1 = (X1 * 3038) >> 16;
-			Debug.Print("X1 {0}", X1);
 			X2 = (-7357 * p) >> 16;
-			Debug.Print("X2 {0}", X2);
 			p = p + (X1 + X2 + 3791) / 16;
-			Debug.Print("P {0}", p);
 
 			return p / 1d;
 		}

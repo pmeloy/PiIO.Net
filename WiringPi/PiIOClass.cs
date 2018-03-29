@@ -1,5 +1,5 @@
 /************************************************************************************************
- * This wrapper class was written by Daniel J Riches for Gordon Hendersons WiringPi C library   *
+ * This wrapper class was written by Daniel J Riches for Gordon Hendersons PiIO C library   *
  * I take no responsibility for this wrapper class providing proper functionality and give no   *
  * warranty of any kind, nor it's use or fitness for any purpose. You use this wrapper at your  *
  * own risk.                                                                                    *
@@ -42,7 +42,7 @@ using System.Runtime.InteropServices;
 using System.Linq;
 using System.Text;
 
-namespace WiringPi
+namespace PiIO
 {
 	[Serializable]
 	public class Measurements
@@ -55,19 +55,18 @@ namespace WiringPi
     public class Init
     {
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiSetup")]     //This is an example of how to call a method / function in a c library from c#
-        public static extern int WiringPiSetup();
+        public static extern int Setup();
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiSetupGpio")]
-        public static extern int WiringPiSetupGpio();
+        public static extern int SetupGpio();
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiSetupSys")]
-        public static extern int WiringPiSetupSys();
+        public static extern int SetupSys();
 
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiSetupPhys")]
-        public static extern int WiringPiSetupPhys();
+        public static extern int SetupPhys();
     }
-
-    /// <summary>
+	/// <summary>
     /// Used to configure a GPIO pin's direction and provide read & write functions to a GPIO pin
     /// </summary>
     public class GPIO
@@ -127,8 +126,7 @@ namespace WiringPi
             Up = 2
         }
     }
-
-    public class SoftPwm {
+	public class SoftPwm {
         [DllImport("libwiringPi.so", EntryPoint = "softPwmCreate")]
         public static extern int Create(int pin, int initialValue, int pwmRange);
 
@@ -138,8 +136,7 @@ namespace WiringPi
         [DllImport("libwiringPi.so", EntryPoint = "softPwmStop")]
         public static extern void Stop(int pin);
     }
-
-    /// <summary>
+	/// <summary>
     /// Provides use of the Timing functions such as delays
     /// </summary>
     public class Timing
@@ -156,7 +153,6 @@ namespace WiringPi
         [DllImport("libwiringPi.so", EntryPoint = "delayMicroseconds")]
         public static extern void delayMicroseconds(uint howLong);
     }
-
     /// <summary>
     /// Provides access to the Thread priority and interrupts for IO
     /// </summary>
@@ -184,7 +180,6 @@ namespace WiringPi
 
         //static extern int piThreadCreate(string name);
     }
-
     public class MiscFunctions
     {
         [DllImport("libwiringPi.so", EntryPoint = "piBoardRev")]
@@ -199,7 +194,6 @@ namespace WiringPi
         [DllImport("libwiringPi.so", EntryPoint = "setPadDrive")]
         public static extern int setPadDrive(int group, int value);
     }
-
     /// <summary>
     /// Provides SPI port functionality
     /// </summary>
@@ -224,11 +218,10 @@ namespace WiringPi
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiSPIDataRW")]
         public static unsafe extern int wiringPiSPIDataRW(int channel, byte* data, int len);  //char is a signed byte
     }
-
     /// <summary>
     /// Provides access to the I2C port
     /// </summary>
-    public class I2C
+    public class I2CCmd
     {
 		public enum EndianType { Big, Little }
         [DllImport("libwiringPi.so", EntryPoint = "wiringPiI2CSetup")]
@@ -332,7 +325,7 @@ namespace WiringPi
 		public static void WriteByte(int deviceHandle, int data)
 		{
 			data &= 0xff;
-			I2C.wiringPiI2CWrite(deviceHandle, data);
+			wiringPiI2CWrite(deviceHandle, data);
 		}
 
 		/// <summary>
@@ -344,7 +337,7 @@ namespace WiringPi
 		public static void WriteReg8(int deviceHandle, int address, int data)
 		{
 			data &= 0xff;
-			I2C.wiringPiI2CWriteReg8(deviceHandle, address, data);
+			wiringPiI2CWriteReg8(deviceHandle, address, data);
 		}
 
 		/// <summary>
@@ -356,13 +349,12 @@ namespace WiringPi
 		public static void WriteReg16(int deviceHandle, int address, int data)
 		{
 			data &= 0xffff;
-			I2C.wiringPiI2CWriteReg16(deviceHandle, address, data);
+			wiringPiI2CWriteReg16(deviceHandle, address, data);
 		}
 
 	}
-
 	/// <summary>
-	///  Provides the ability to use the Software Tone functions in WiringPi
+	///  Provides the ability to use the Software Tone functions in PiIO
 	/// </summary>
 	public class Tone
     {
