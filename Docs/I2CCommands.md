@@ -64,7 +64,17 @@ _Example_
 	I2CCmd.WriteByte(deviceHandle, data);
 ```
 
-### WriteReg16(int, int, int)
+### Write16(int, int, int) ###
+**Returns** Void
+
+NOT IMPLEMENTED YET: Write two consecutive bytes to a device.
+
+_Example_
+```C#
+	I2CCmd.WriteReg16(deviceHandle, data);
+```
+
+### WriteReg16(int, int, int) ###
 **Returns** Void
 
 Write two consecutive bytes to a device starting at register address
