@@ -1,25 +1,28 @@
-pmeloy/PiIO.Net
-===================
-A different take on WiringPi.Net with emphasis on functionality and ease of use.
+# PiIO.Net #
+I was searching for a way to use Winforms and C# on the Pi with Mono and found several projects aimed at this goal. All seemed to not be in a usable state with compilation errors and slow or non-responsive authors. Then I ran across danriches/WiringPi.Net and it worked perfectly after a bit of investigation into how to get the original C wiringPi.o onto my Pi.
 
-I've departed from the original naming so a method like wiringPiReadReg8()
-is now called ReadReg8(). Didn't see the point in doubling up on the name PiIO.
+When I looked at the code I realized what danriches meant when he said it was a "simple" wrapper. There wasn't much more there than imports from the C library so it was a great starting place for me. I could have just written my own wrapper using the danriches source for a tutorial buy why bother when he'd already done it?
 
-The danriches/WiringPi.Net I2C functions were simply exports from PiIO even though the 16 bit
-methods were actually specific to device examples and lacking sign and endian options, and often
-simply couldn't deal with data correctly. I've added wrappers for the wrappers!
+So using WiringPi.Net as a starting point I'm building PiIO.net. The goal is to have a complete yet still simple Pi IO library for C# (and probably VB but I haven't investigated that yet).
 
-I'm also reorganizing namespaces. Instead of everything being under the main namespace it will be split up by topic such as I2C and SPI. The non-specific classes and methods will stay in the main namespace.
+The original wrapper had a single namespace for everything which doesn't fit with my idea of how to do things so I've split that into several like PiIO.I2C, PiIO.GPIO, and the like. This lets me add devices under the appropriate namespace. What I don't see is any hardware PWM but I'll investigate the C wiringPi methods and add wrappers/classes for that as well.
 
-As an example, the former WiringPi.I2C class will now be PiIO.I2C.I2CCmd so the using statement to get I2C commands will be "using PiIO.I2C". This lets me add devices to the namespace.
+Right now I'm working in I2C and have the following
+PiIO.I2C.I2CCmd - 8 and 16 bit read and write operations with endian and sign
+PiIO.I2C.Devices.Sensors.Barometric.BMPx80 a class to use the BMP family barometric sensors
 
-Prerequisites
--------------
+I'll be adding more devices shortly (the ones I have on hand) like
+PiIO.I2C.Devices.ADC.ADS1x15
+PiIO.I2C.Devices.Temperature.
+PiIO.I2C.Devices.Humidity.Si7021
+
+I've also got some SPI devices which I can't remember the name of but I'll add those as well.
+
+### Prerequisites ###
 - A .NET Ide like Visual Studio or MonoDevelop.
 - The original PiIO installed on your Pi (http://PiIO.com/)
 
-Installing
-----------
+### Installing ###
 Download the pmeloy/PiIO.Net repository to your development PC or Pi then choose either
 adding the PiIO.Net project to your solution or just use the PiIO.Net.dll. For detailed
 instructions on adding a reference see "AddingReference.txt".
@@ -41,57 +44,19 @@ At this point you should have:
 * A reference to PiIO.Net added to your project and set Copy Local to True
 * Optionally PiIO.Net source added to your solution
 
-Remote Deploy and Debug
------------------------
+### Remote Deploy and Debug ###
 See RemoteDeployDebug.txt for tips on how to streamline development. I prefer keeping all projects on
 the Pi so I can avoid manually copying and debug remotely.
 
-License
--------
+### License ###
 GNU GPL in keeping with danriches original license.
 
-Authors
+### Authors ###
 -------
 Just me (well, the parts that I changed).
 
-Acknowledgements
-----------------
+### Acknowledgements ###
 * The original PiIO author since this wouldn't exist if that didn't!
 * danriches for the code to build upon
-* Adafruit and PiIO for the example code (in the wrong languages) that let me figure out how to use PiIO.NET
+* Adafruit and wiringPi for the example code (in the wrong languages) that let me figure out how to use PiIO.NET
 	in the first place.
-
-EOF----------------------------------------------------------------------------------------------------------------
-
-Original danriches ReadMe contents.
------------------------------------
-
-A simple C# wrapper for Gordon's PiIO library, also on GitHub. Please note this was only tested with
-the hardfloat version of Raspbian using CrashOverrides mono build which can be found here: 
-http://www.raspberrypi.org/phpBB3/viewtopic.php?f=34&t=37174&hilit=c%23+experimental 
-
-Simply install Gordon's PiIO library on your Raspberry Pi and create the shared libraries as follows:
-
-cc -shared PiIO.o -o libPiIO.so
-
-cc -shared PiIOI2C.o -o libPiIOI2C.so
-
-cc -shared PiIOSPI.o -o libPiIOSPI.so
-
-Compile the project in Visual Studio 2010 and copy to your RasPi via FileZilla or some other SFTP client. Then 
-run with: sudo mono SPITest.exe 
-With nothing connected to the GPIO header you should see:
-
-SPI init completed, using channel 0 at 32MHz for loopback testing
-All zeros read back
-
-If you short the MISO and MOSI pins together you should see:
-
-SPI init completed, using channel 0 at 32MHz for loopback testing
-Loopback is connected!
-
-This is a different project to another .Net io library in that the SPI is hardware based and not software driven, 
-the same with the I2C interface.
-
-All praise should really go to Gordon@drogon for his great library which exposes all the required interfaces making 
-my life and others that much easier. Cheers Gordon!!
