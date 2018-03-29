@@ -1,4 +1,4 @@
-# PiIO.Net # Work in progress! Not for consumption yet.
+# PiIO.Net - Work in progress! Not for consumption yet.
 I was searching for a way to use Winforms and C# on the Pi with Mono and found several projects aimed at this goal. All seemed to not be in a usable state with compilation errors and slow or non-responsive authors. Then I ran across danriches/WiringPi.Net and it worked perfectly after a bit of investigation into how to get the original C wiringPi.o onto my Pi.
 
 When I looked at the code I realized what danriches meant when he said it was a "simple" wrapper. There wasn't much more there than imports from the C library so it was a great starting place for me. I could have just written my own wrapper using the danriches source for a tutorial buy why bother when he'd already done it?
