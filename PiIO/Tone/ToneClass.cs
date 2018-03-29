@@ -4,10 +4,10 @@ namespace PiIO.Tone
 {
 	public class ToneCmd
 	{
-		[DllImport("libPiIO.so", EntryPoint = "softToneCreate")]
+		[DllImport("wiringPi.so", EntryPoint = "softToneCreate")]
 		public static extern int softToneCreate(int pin);
 
-		[DllImport("libPiIO.so", EntryPoint = "softToneWrite")]
+		[DllImport("wiringPi.so", EntryPoint = "softToneWrite")]
 		public static extern void softToneWrite(int pin, int freq);
 	}
 

@@ -9,27 +9,27 @@ namespace PiIO.I2C
 {
 	public class I2CCmd
 	{
-		public enum EndianType { Big, Little }
-		[DllImport("libPiIO.so", EntryPoint = "PiIOI2CSetup")]
-		private static extern int PiIOI2CSetup(int devId);
 
-		[DllImport("libPiIO.so", EntryPoint = "PiIOI2CRead")]
-		private static extern int PiIOI2CRead(int fd);
+		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CSetup")]
+		private static extern int wiringPiI2CSetup(int devId);
 
-		[DllImport("libPiIO.so", EntryPoint = "PiIOI2CWrite")]
-		private static extern int PiIOI2CWrite(int fd, int data);
+		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CRead")]
+		private static extern int wiringPiI2CRead(int fd);
 
-		[DllImport("libPiIO.so", EntryPoint = "PiIOI2CWriteReg8")]
-		private static extern int PiIOI2CWriteReg8(int fd, int reg, int data);
+		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CWrite")]
+		private static extern int wiringPiI2CWrite(int fd, int data);
 
-		[DllImport("libPiIO.so", EntryPoint = "PiIOI2CWriteReg16")]
-		private static extern int PiIOI2CWriteReg16(int fd, int reg, int data);
+		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CWriteReg8")]
+		private static extern int wiringPiI2CWriteReg8(int fd, int reg, int data);
 
-		[DllImport("libPiIO.so", EntryPoint = "PiIOI2CReadReg8")]
-		private static extern int PiIOI2CReadReg8(int fd, int reg);
+		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CWriteReg16")]
+		private static extern int wiringPiI2CWriteReg16(int fd, int reg, int data);
 
-		[DllImport("libPiIO.so", EntryPoint = "PiIOI2CReadReg16")]
-		private static extern int PiIOI2CReadReg16(int fd, int reg);
+		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CReadReg8")]
+		private static extern int wiringPiI2CReadReg8(int fd, int reg);
+
+		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CReadReg16")]
+		private static extern int wiringPiI2CReadReg16(int fd, int reg);
 
 		/// <summary>
 		/// Register I2C Device
@@ -38,7 +38,7 @@ namespace PiIO.I2C
 		/// <returns>Device Handle</returns>
 		public static int Setup(int I2CAddress)
 		{
-			return PiIOI2CSetup(I2CAddress);
+			return wiringPiI2CSetup(I2CAddress);
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace PiIO.I2C
 		/// <returns>int</returns>
 		public static int ReadByte(int deviceHandle)
 		{
-			return PiIOI2CRead(deviceHandle);
+			return wiringPiI2CRead(deviceHandle);
 		}
 
 		/// <summary>
@@ -59,7 +59,7 @@ namespace PiIO.I2C
 		/// <returns></returns>
 		public static int ReadReg8(int deviceHandle, int address)
 		{
-			return PiIOI2CReadReg8(deviceHandle, address);
+			return ReadReg8(deviceHandle, address);
 		}
 
 		/// <summary>
@@ -74,8 +74,8 @@ namespace PiIO.I2C
 			int result = 0;
 			int byte1, byte2;
 
-			byte1 = PiIOI2CReadReg8(deviceHandle, address);
-			byte2 = PiIOI2CReadReg8(deviceHandle, address + 1);
+			byte1 = ReadReg8(deviceHandle, address);
+			byte2 = ReadReg8(deviceHandle, address + 1);
 
 			if (endian == EndianType.Big)
 			{
@@ -111,7 +111,7 @@ namespace PiIO.I2C
 		public static void WriteByte(int deviceHandle, int data)
 		{
 			data &= 0xff;
-			PiIOI2CWrite(deviceHandle, data);
+			WriteByte(deviceHandle, data);
 		}
 
 		/// <summary>
@@ -123,7 +123,7 @@ namespace PiIO.I2C
 		public static void WriteReg8(int deviceHandle, int address, int data)
 		{
 			data &= 0xff;
-			PiIOI2CWriteReg8(deviceHandle, address, data);
+			WriteReg8(deviceHandle, address, data);
 		}
 
 		/// <summary>
@@ -135,7 +135,7 @@ namespace PiIO.I2C
 		public static void WriteReg16(int deviceHandle, int address, int data)
 		{
 			data &= 0xffff;
-			PiIOI2CWriteReg16(deviceHandle, address, data);
+			WriteReg16(deviceHandle, address, data);
 		}
 
 	}

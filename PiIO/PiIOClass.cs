@@ -44,26 +44,26 @@ using System.Text;
 
 namespace PiIO
 {
+
 	[Serializable]
-	public class Measurements
-	{
-		public enum Units : int { Metric, Imperial }
-	}
-    /// <summary>
+	public enum Units : int { Metric, Imperial }
+	public enum EndianType : int { Big, Little }
+	
+	/// <summary>
     /// Used to initialise Gordon's library, there's 4 different ways to initialise and we're going to support all 4
     /// </summary>
     public class Init
     {
-        [DllImport("libPiIO.so", EntryPoint = "Setup")]     //This is an example of how to call a method / function in a c library from c#
+        [DllImport("wiringPi.so", EntryPoint = "wiringPiSetup")]     //This is an example of how to call a method / function in a c library from c#
         public static extern int Setup();
 
-        [DllImport("libPiIO.so", EntryPoint = "SetupGpio")]
+        [DllImport("wiringPi.so", EntryPoint = "wiringPiSetupGpio")]
         public static extern int SetupGpio();
 
-        [DllImport("libPiIO.so", EntryPoint = "SetupSys")]
+        [DllImport("wiringPi.so", EntryPoint = "wiringPiSetupSys")]
         public static extern int SetupSys();
 
-        [DllImport("libPiIO.so", EntryPoint = "SetupPhys")]
+        [DllImport("wiringPi.so", EntryPoint = "wiringPiSetupPhys")]
         public static extern int SetupPhys();
     }
 	/// <summary>
@@ -71,16 +71,16 @@ namespace PiIO
     /// </summary>
     public class Timing
     {
-        [DllImport("libPiIO.so", EntryPoint = "millis")]
+        [DllImport("wiringPi.so", EntryPoint = "millis")]
         public static extern uint millis();
 
-        [DllImport("libPiIO.so", EntryPoint = "micros")]
+        [DllImport("wiringPi.so", EntryPoint = "micros")]
         public static extern uint micros();
 
-        [DllImport("libPiIO.so", EntryPoint = "delay")]
+        [DllImport("wiringPi.so", EntryPoint = "delay")]
         public static extern void delay(uint howLong);
 
-        [DllImport("libPiIO.so", EntryPoint = "delayMicroseconds")]
+        [DllImport("wiringPi.so", EntryPoint = "delayMicroseconds")]
         public static extern void delayMicroseconds(uint howLong);
     }
     /// <summary>
@@ -88,16 +88,16 @@ namespace PiIO
     /// </summary>
     public class PiThreadInterrupts
     {
-        [DllImport("libPiIO.so", EntryPoint = "piHiPri")]
+        [DllImport("wiringPi.so", EntryPoint = "piHiPri")]
         public static extern int piHiPri(int priority);
 
-        [DllImport("libPiIO.so", EntryPoint = "waitForInterrupt")]
+        [DllImport("wiringPi.so", EntryPoint = "waitForInterrupt")]
         public static extern int waitForInterrupt(int pin, int timeout);
 
         //This is the C# equivelant to "void (*function)(void))" required by PiIO to define a callback method
         public delegate void ISRCallback();
 
-        [DllImport("libPiIO.so", EntryPoint = "PiIOISR")]
+        [DllImport("wiringPi.so", EntryPoint = "PiIOISR")]
         public static extern int PiIOISR(int pin, int mode, ISRCallback method);
 
         public enum InterruptLevels
@@ -112,16 +112,16 @@ namespace PiIO
     }
     public class MiscFunctions
     {
-        [DllImport("libPiIO.so", EntryPoint = "piBoardRev")]
+        [DllImport("wiringPi.so", EntryPoint = "piBoardRev")]
         public static extern int piBoardRev();
 
-        [DllImport("libPiIO.so", EntryPoint = "wpiPinToGpio")]
+        [DllImport("wiringPi.so", EntryPoint = "wpiPinToGpio")]
         public static extern int wpiPinToGpio(int wPiPin);
 
-        [DllImport("libPiIO.so", EntryPoint = "physPinToGpio")]
+        [DllImport("wiringPi.so", EntryPoint = "physPinToGpio")]
         public static extern int physPinToGpio(int physPin);
 
-        [DllImport("libPiIO.so", EntryPoint = "setPadDrive")]
+        [DllImport("wiringPi.so", EntryPoint = "setPadDrive")]
         public static extern int setPadDrive(int group, int value);
     }
     /// <summary>

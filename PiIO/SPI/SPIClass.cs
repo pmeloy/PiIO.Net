@@ -17,7 +17,7 @@ namespace PiIO.SPI
 		/// <param name="channel">Selects either Channel 0 or 1 for use</param>
 		/// <param name="speed">Selects speed, 500,000 to 32,000,000</param>
 		/// <returns>-1 for an error, or the linux file descriptor the channel uses</returns>
-		[DllImport("libPiIO.so", EntryPoint = "PiIOSPISetup")]
+		[DllImport("wiringPi.so", EntryPoint = "PiIOSPISetup")]
 		public static extern int Setup(int channel, int speed);
 
 		/// <summary>
@@ -27,7 +27,7 @@ namespace PiIO.SPI
 		/// <param name="data">signed byte array pointer which holds the data to send and will then hold the received data</param>
 		/// <param name="len">How many bytes to write and read</param>
 		/// <returns>-1 for an error, or the linux file descriptor the channel uses</returns>
-		[DllImport("libPiIO.so", EntryPoint = "PiIOSPIDataRW")]
+		[DllImport("wiringPi.so", EntryPoint = "PiIOSPIDataRW")]
 		public static unsafe extern int DataRW(int channel, byte* data, int len);  //char is a signed byte
 	}
 

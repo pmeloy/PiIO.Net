@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using PiIO.I2C;
-namespace PiIO.I2C.Devices.TempAndPress
+namespace PiIO.I2C.Devices.Barometric
 {
 
 	/// <summary>
@@ -114,10 +114,10 @@ namespace PiIO.I2C.Devices.TempAndPress
 		/// </summary>
 		/// <param name="units">System to use</param>
 		/// <returns></returns>
-		public float GetTemperature(Measurements.Units units = Measurements.Units.Metric)
+		public float GetTemperature(Units units = Units.Metric)
 		{
 			float temp = (float)ReadTemp();
-			if (units == Measurements.Units.Imperial) temp = temp * 9 / 5 + 32;
+			if (units == Units.Imperial) temp = temp * 9 / 5 + 32;
 			return temp;
 		}
 		#endregion

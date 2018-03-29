@@ -41,7 +41,7 @@
     <Compile Include="I2C\I2CClass.cs" />
     <Compile Include="I2C\Devices\Sensors\BMP180Class.cs" />
     <Compile Include="PiIOClass.cs" />
-    <Compile Include="PWM\PWMClass.cs" />
+    <Compile Include="SoftPWM\PWMClass.cs" />
     <Compile Include="SPI\SPIClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tone\ToneClass.cs" />

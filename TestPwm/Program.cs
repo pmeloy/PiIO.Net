@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using PiIO;
-using PiIO.PWM;
+using PiIO.SoftPWM;
 
 namespace TestPwm {
     class Program {
