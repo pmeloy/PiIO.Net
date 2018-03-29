@@ -94,17 +94,17 @@ namespace PiIO.I2C.Devices.Barometric
 		private void LoadCalibration()
 		{
 
-			_cal_AC1 = I2CCmd.ReadS16(_bmpHandle, ADDR_AC1);
-			_cal_AC2 = I2CCmd.ReadS16(_bmpHandle, ADDR_AC2);
-			_cal_AC3 = I2CCmd.ReadS16(_bmpHandle, ADDR_AC3);
-			_cal_AC4 = I2CCmd.ReadU16(_bmpHandle, ADDR_AC4);
-			_cal_AC5 = I2CCmd.ReadU16(_bmpHandle, ADDR_AC5);
-			_cal_AC6 = I2CCmd.ReadU16(_bmpHandle, ADDR_AC6);
-			_cal_B1 = I2CCmd.ReadS16(_bmpHandle, ADDR_B1);
-			_cal_B2 = I2CCmd.ReadS16(_bmpHandle, ADDR_B2);
-			_cal_MB = I2CCmd.ReadS16(_bmpHandle, ADDR_MB);
-			_cal_MC = I2CCmd.ReadS16(_bmpHandle, ADDR_MC);
-			_cal_MD = I2CCmd.ReadS16(_bmpHandle, ADDR_MD);
+			_cal_AC1 = I2CCmd.ReadRegS16(_bmpHandle, ADDR_AC1);
+			_cal_AC2 = I2CCmd.ReadRegS16(_bmpHandle, ADDR_AC2);
+			_cal_AC3 = I2CCmd.ReadRegS16(_bmpHandle, ADDR_AC3);
+			_cal_AC4 = I2CCmd.ReadRegU16(_bmpHandle, ADDR_AC4);
+			_cal_AC5 = I2CCmd.ReadRegU16(_bmpHandle, ADDR_AC5);
+			_cal_AC6 = I2CCmd.ReadRegU16(_bmpHandle, ADDR_AC6);
+			_cal_B1 = I2CCmd.ReadRegS16(_bmpHandle, ADDR_B1);
+			_cal_B2 = I2CCmd.ReadRegS16(_bmpHandle, ADDR_B2);
+			_cal_MB = I2CCmd.ReadRegS16(_bmpHandle, ADDR_MB);
+			_cal_MC = I2CCmd.ReadRegS16(_bmpHandle, ADDR_MC);
+			_cal_MD = I2CCmd.ReadRegS16(_bmpHandle, ADDR_MD);
 		}
 		#endregion
 
@@ -129,7 +129,7 @@ namespace PiIO.I2C.Devices.Barometric
 			int raw;
 			I2CCmd.WriteReg8(_bmpHandle, ADDR_CONTROL, CMD_READ_TEMP);
 			Thread.Sleep(50);
-			raw = I2CCmd.ReadU16(_bmpHandle, ADDR_TEMP);
+			raw = I2CCmd.ReadRegU16(_bmpHandle, ADDR_TEMP);
 
 			return raw;
 		}

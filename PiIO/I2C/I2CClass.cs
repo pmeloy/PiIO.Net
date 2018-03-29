@@ -9,7 +9,7 @@ namespace PiIO.I2C
 {
 	public class I2CCmd
 	{
-
+#region "Imports"
 		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CSetup")]
 		private static extern int wiringPiI2CSetup(int devId);
 
@@ -30,6 +30,8 @@ namespace PiIO.I2C
 
 		[DllImport("wiringPi.so", EntryPoint = "wiringPiI2CReadReg16")]
 		private static extern int wiringPiI2CReadReg16(int fd, int reg);
+#endregion
+
 
 		/// <summary>
 		/// Register I2C Device
@@ -69,7 +71,7 @@ namespace PiIO.I2C
 		/// <param name="address">Address of starting register</param>
 		/// <param name="endian">Big or little endian</param>
 		/// <returns>Unsigned Int</returns>
-		public static int ReadU16(int deviceHandle, int address, EndianType endian = EndianType.Big)
+		public static int ReadRegU16(int deviceHandle, int address, EndianType endian = EndianType.Big)
 		{
 			int result = 0;
 			int byte1, byte2;
@@ -95,10 +97,10 @@ namespace PiIO.I2C
 		/// <param name="address">Address of starting register</param>
 		/// <param name="endian">Big or little endian</param>
 		/// <returns>Signed int</returns>
-		public static int ReadS16(int deviceHandle, int address, EndianType endian = EndianType.Big)
+		public static int ReadRegS16(int deviceHandle, int address, EndianType endian = EndianType.Big)
 		{
 			int result = 0;
-			result = ReadU16(deviceHandle, address, endian);
+			result = ReadRegU16(deviceHandle, address, endian);
 			if (result > 32767) result -= 65536;
 			return result;
 		}
@@ -124,6 +126,18 @@ namespace PiIO.I2C
 		{
 			data &= 0xff;
 			WriteReg8(deviceHandle, address, data);
+		}
+
+		/// <summary>
+		/// Write two bytes to a device
+		/// </summary>
+		/// <param name="deviceHandle">Device handle from PiIOI2CSetup()</param>
+		/// <param name="value">Value to write</param>
+		public static void Write16(int deviceHandle, int data)
+		{
+			//todo: Write16 - two bytes without an address		
+			data &= 0xffff;
+
 		}
 
 		/// <summary>
