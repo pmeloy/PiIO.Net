@@ -46,7 +46,7 @@ namespace PiIO
 {
 
 	[Serializable]
-	public enum Units : int { Metric, Imperial }
+	public enum Measures : int { Metric, Imperial }
 	public enum EndianType : int { Big, Little }
 	
 	/// <summary>

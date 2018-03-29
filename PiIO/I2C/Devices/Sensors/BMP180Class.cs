@@ -114,10 +114,10 @@ namespace PiIO.I2C.Devices.Barometric
 		/// </summary>
 		/// <param name="units">System to use</param>
 		/// <returns></returns>
-		public float GetTemperature(Units units = Units.Metric)
+		public float GetTemperature(Measures units = Measures.Metric)
 		{
 			float temp = (float)ReadTemp();
-			if (units == Units.Imperial) temp = temp * 9 / 5 + 32;
+			if (units == Measures.Imperial) temp = temp * 9 / 5 + 32;
 			return temp;
 		}
 		#endregion
