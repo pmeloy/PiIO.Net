@@ -12,9 +12,9 @@ PiIO.I2C.I2CCmd - 8 and 16 bit read and write operations with endian and sign
 PiIO.I2C.Devices.Sensors.Barometric.BMPx80 a class to use the BMP family barometric sensors
 
 I'll be adding more devices shortly (the ones I have on hand) like
-PiIO.I2C.Devices.ADC.ADS1x15
-PiIO.I2C.Devices.Temperature.
-PiIO.I2C.Devices.Humidity.Si7021
+- PiIO.I2C.Devices.ADC.ADS1x15
+- PiIO.I2C.Devices.Temperature.
+- PiIO.I2C.Devices.Humidity.Si7021
 
 I've also got some SPI devices which I can't remember the name of but I'll add those as well.
 
