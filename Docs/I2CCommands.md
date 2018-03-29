@@ -1,8 +1,6 @@
 # I2C Command Reference #
 
-Namespace PiIO.I2C
-
-## Class I2CCmd ##
+### Namespace PiIO.I2C, Class I2CCmd ###
 
 ### Setup(int) ###
 **Returns** int - Error returns negative value
