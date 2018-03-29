@@ -1,13 +1,17 @@
 pmeloy/PiIO.Net
 ===================
-A different take on PiIO.Net with emphasis on functionality and ease of use.
+A different take on WiringPi.Net with emphasis on functionality and ease of use.
 
-I've departed from the original PiIO naming so a method like PiIO.I2C.PiIOReadReg8()
-is now called PiIO.I2C.ReadReg8(). Didn't see the point in doubling up on the name PiIO.
+I've departed from the original naming so a method like wiringPiReadReg8()
+is now called ReadReg8(). Didn't see the point in doubling up on the name PiIO.
 
-The danriches/PiIO.Net I2C functions were simply exports from PiIO even though the 16 bit
+The danriches/WiringPi.Net I2C functions were simply exports from PiIO even though the 16 bit
 methods were actually specific to device examples and lacking sign and endian options, and often
 simply couldn't deal with data correctly. I've added wrappers for the wrappers!
+
+I'm also reorganizing namespaces. Instead of everything being under the main namespace it will be split up by topic such as I2C and SPI. The non-specific classes and methods will stay in the main namespace.
+
+As an example, the former WiringPi.I2C class will now be PiIO.I2C.I2CCmd so the using statement to get I2C commands will be "using PiIO.I2C". This lets me add devices to the namespace.
 
 Prerequisites
 -------------
