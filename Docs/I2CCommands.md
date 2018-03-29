@@ -14,6 +14,7 @@ _Example_
 deviceHandle = I2CCmd.Setup(0x77);
 if (deviceHandle < 0) MyErrorHandler();
 ```
+-----
 ### ReadByte(int) ###
 **Returns** int
 
@@ -23,7 +24,7 @@ _Example_
 ```C#
 	myByte = I2CCmd.ReadByte(int deviceHandle);
 ```
-
+-----
 ### ReadReg8(int, int) ###
 **Returns int**
 
@@ -33,7 +34,7 @@ _Example_
 ```C#
 	myByte = I2CCmd.ReadByte(deviceHandle, registerAddress);
 ```
-
+-----
 ### ReadRegU16(int, int, EndianType = EndianType.Big) ###
 **Returns** Unsigned Int
 
@@ -43,7 +44,7 @@ _Example_
 ```C#
 	myByte = I2CCmd.ReadRegU16(deviceHandle, registerAddress, EndianType.BigEndian);
 ```
-
+-----
 ### ReadRegS16(int, int, EndianType = EndianType.Big) ###
 **Returns** Signed Int
 
@@ -53,7 +54,7 @@ _Example_
 ```C#
 	myByte = I2CCmd.ReadS16(deviceHandle, registerAddress, EndianType.BigEndian);
 ```
-
+-----
 ### WriteByte(int, int) ###
 **Returns** Void
 
@@ -63,7 +64,7 @@ _Example_
 ```C#
 	I2CCmd.WriteByte(deviceHandle, data);
 ```
-
+-----
 ### Write16(int, int, int) ###
 **Returns** Void
 
@@ -73,7 +74,7 @@ _Example_
 ```C#
 	I2CCmd.WriteReg16(deviceHandle, data);
 ```
-
+-----
 ### WriteReg16(int, int, int) ###
 **Returns** Void
 
@@ -83,3 +84,4 @@ _Example_
 ```C#
 	I2CCmd.WriteReg16(deviceHandle, address, data);
 ```
+-----
