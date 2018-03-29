@@ -32,7 +32,7 @@ downloaded/built from the wiringPi site.
 
 Download the original wiringPi to your Pi (not PC) and follow the instructions to build it.
 
-You'll have to create a shared library from the PiIO.o (in /wiringPi/wiringPi) with
+You'll have to create a shared library from the wiringPi.o (in /wiringPi/wiringPi) with
 	
 	cc -shared PiIO.o -o libPiIO.so
 
