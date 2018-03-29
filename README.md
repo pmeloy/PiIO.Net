@@ -55,7 +55,7 @@ GNU GPL in keeping with danriches original license.
 Just me (well, the parts that I changed).
 
 ### Acknowledgements ###
-* The original PiIO author since this wouldn't exist if that didn't!
+* The original wiringPi author since this wouldn't exist if that didn't!
 * danriches for the code to build upon
-* Adafruit and wiringPi for the example code (in the wrong languages) that let me figure out how to use PiIO.NET
+* Adafruit and wiringPi for the example code (in the wrong languages) that let me figure out how to use WiringPi.NET
 	in the first place.
