@@ -3,7 +3,7 @@
 Namespace PiIO.I2C
 
 ## Class I2CCmd ##
------
+
 ### Setup(int) ###
 **Returns** int - Error returns negative value
 
