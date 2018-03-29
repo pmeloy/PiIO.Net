@@ -20,26 +20,26 @@ I've also got some SPI devices which I can't remember the name of but I'll add t
 
 ### Prerequisites ###
 - A .NET Ide like Visual Studio or MonoDevelop.
-- The original PiIO installed on your Pi (http://PiIO.com/)
+- The original C wiringPi source installed on your Pi (http://wiringpi.com/)
 
 ### Installing ###
 Download the pmeloy/PiIO.Net repository to your development PC or Pi then choose either
 adding the PiIO.Net project to your solution or just use the PiIO.Net.dll. For detailed
 instructions on adding a reference see "AddingReference.txt".
 
-I was unable to find PiIO.o in the default Raspbian distro so I removed PiIO with apt and
-downloaded/built from the PiIO site.
+I was unable to find wiringPi.o in the default Raspbian distro so I removed PiIO with apt and
+downloaded/built from the wiringPi site.
 
-Download the original PiIO to your Pi (not PC) and follow the instructions to build it.
+Download the original wiringPi to your Pi (not PC) and follow the instructions to build it.
 
-You'll have to create a shared library from the PiIO.o (in /PiIO/PiIO) with
+You'll have to create a shared library from the PiIO.o (in /wiringPi/wiringPi) with
 	
 	cc -shared PiIO.o -o libPiIO.so
 
-NOTE: The original PiIO.Net Readme shows three files that had to be copied but now it's only the one.
+NOTE: The original WiringPi.Net Readme shows three files that had to be copied but now it's only the one.
 
 At this point you should have:
-* PiIO built on your Pi and the shared library created.
+* wiringPi built on your Pi and the shared library created.
 * pmeloy/PiIO.Net downloaded to your PC or Pi
 * A reference to PiIO.Net added to your project and set Copy Local to True
 * Optionally PiIO.Net source added to your solution
@@ -52,7 +52,6 @@ the Pi so I can avoid manually copying and debug remotely.
 GNU GPL in keeping with danriches original license.
 
 ### Authors ###
--------
 Just me (well, the parts that I changed).
 
 ### Acknowledgements ###
